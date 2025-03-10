@@ -9,6 +9,7 @@
 
 import itertools as it
 import scipy as sp
+import numpy as np
 import scipy.stats as st
 
 def anova_test(*args):
@@ -40,12 +41,12 @@ def anova_test(*args):
     if len(set([len(v) for v in args])) != 1: raise ValueError('Unequal number of samples')
 
     # Precalcs
-    x_j = [sp.sum(group) for group in args]
-    x_t = sp.sum(x_j)
+    x_j = [np.sum(group) for group in args]
+    x_t = np.sum(x_j)
 
     # Variances
-    ss_t = sp.sum([v**2 for group in args for v in group ]) - x_t**2/float(k*n)
-    ss_bg = sp.sum(x_j[j]**2/float(n) for j in range(k)) - x_t**2/float(k*n)
+    ss_t = np.sum([v**2 for group in args for v in group ]) - x_t**2/float(k*n)
+    ss_bg = np.sum(x_j[j]**2/float(n) for j in range(k)) - x_t**2/float(k*n)
     ss_wg = ss_t - ss_bg
 
     # Degrees of freedom
